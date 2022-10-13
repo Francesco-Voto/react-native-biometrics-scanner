@@ -1,14 +1,34 @@
-import * as React from 'react';
-
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from 'react-native-biometrics-scanner';
-
-const result = multiply(3, 7);
+import { isAvailable, NoEnrollError, UnknownBiometricError, UnsupportedBiometricError } from 'react-native-biometrics-scanner';
 
 export default function App() {
+  const [isBiometricAvailable, setIsBiometricAvailable] = useState<string>('Loading');
+  const [biometricError, setBiometricError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const getAvailability = async () => {
+      try {
+        setIsBiometricAvailable(await isAvailable() ? 'Yes' : 'No');
+      } catch(error) {
+        if(error instanceof NoEnrollError) {
+          setBiometricError('No enroll');
+        }
+        if(error instanceof UnsupportedBiometricError) {
+          setBiometricError('Unsupported');
+        }
+        if(error instanceof UnknownBiometricError) {
+          setBiometricError('Unknown error');
+        }
+      }
+    };
+
+    getAvailability();
+  }, []);
+
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
+      { biometricError ? <Text>An error occurred: {biometricError}</Text> : <Text>is Available? {isBiometricAvailable}</Text> }
     </View>
   );
 }
