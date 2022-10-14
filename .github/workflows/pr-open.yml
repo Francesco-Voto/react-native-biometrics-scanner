@@ -1,0 +1,34 @@
+name: Open PR
+
+on: [pull_request]
+
+jobs:
+  unit-lint-ts:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Cache node modules
+        uses: actions/cache@v3
+        id: yarn-cache
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.13.1
+
+      - name: Install Dependencies
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+        run:
+          yarn install
+
+      - run: yarn eslint
+
+      - run: yarn typescript
+
+      - run: yarn test --bail --forceExit
