@@ -1,1 +1,1 @@
-type BiometricType = 'TouchID' | 'FaceID' | 'BiometricID'
+type BiometricType = 'TouchID' | 'FaceID' | 'BiometricID';
