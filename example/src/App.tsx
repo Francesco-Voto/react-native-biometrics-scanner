@@ -1,4 +1,4 @@
-// @ts-ignore
+// @ts-nocheck
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import {
