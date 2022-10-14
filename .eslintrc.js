@@ -1,6 +1,6 @@
 module.exports = {
   root: true,
-  parser: '@babel/eslint-parser',
+  parser: '@typescript-eslint/parser',
   extends: ['@react-native-community', 'prettier'],
   rules: {
     'prettier/prettier': [
