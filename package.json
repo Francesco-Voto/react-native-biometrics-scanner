@@ -33,7 +33,11 @@
   "keywords": [
     "react-native",
     "ios",
-    "android"
+    "android",
+    "biometrics",
+    "fingerprint",
+    "touchId",
+    "faceId"
   ],
   "repository": "https://github.com/Francesco-Voto/react-native-biometrics-scanner",
   "author": "Francesco <francesco.voto.8@gmail.com> (https://github.com/Francesco-Voto)",
@@ -67,9 +71,6 @@
     "release-it": "^15.0.0",
     "typescript": "^4.5.2"
   },
-  "resolutions": {
-    "@types/react": "17.0.21"
-  },
   "peerDependencies": {
     "react": "*",
     "react-native": "*"
@@ -102,37 +103,6 @@
         "preset": "angular"
       }
     }
-  },
-  "eslintConfig": {
-    "root": true,
-    "parser": "@babel/eslint-parser",
-    "extends": [
-      "@react-native-community",
-      "prettier"
-    ],
-    "rules": {
-      "prettier/prettier": [
-        "error",
-        {
-          "quoteProps": "consistent",
-          "singleQuote": true,
-          "tabWidth": 2,
-          "trailingComma": "es5",
-          "useTabs": false
-        }
-      ]
-    }
-  },
-  "eslintIgnore": [
-    "node_modules/",
-    "lib/"
-  ],
-  "prettier": {
-    "quoteProps": "consistent",
-    "singleQuote": true,
-    "tabWidth": 2,
-    "trailingComma": "es5",
-    "useTabs": false
   },
   "react-native-builder-bob": {
     "source": "src",
