@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import {
-  autheticate,
+  authenticate,
   getAvailableBiometric,
   BiometricNoEnrollError,
   BiometricUnsupportedError,
@@ -21,7 +21,7 @@ export default function App() {
 
         if (biometric) {
           setIsBiometricAvailable('Yes');
-          await autheticate();
+          await authenticate();
         } else {
           setIsBiometricAvailable('No');
         }
