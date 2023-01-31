@@ -59,7 +59,7 @@ describe('Given a function to check if biometric is active', () => {
       spyFn.mockClear();
     });
 
-    it('should throw a NoEnrollError', async () => {
+    it('should throw a BiometricNoEnrollError', async () => {
       const { getAvailableBiometric } = require('../getAvailableBiometric');
 
       expect.assertions(1);
@@ -86,7 +86,7 @@ describe('Given a function to check if biometric is active', () => {
       spyFn.mockClear();
     });
 
-    it('should throw a UnsupportedBiometricError', async () => {
+    it('should throw a BiometricUnsupportedError', async () => {
       const { getAvailableBiometric } = require('../getAvailableBiometric');
 
       expect.assertions(1);
@@ -113,7 +113,7 @@ describe('Given a function to check if biometric is active', () => {
       spyFn.mockClear();
     });
 
-    it('should throw a UnknownBiometricError', async () => {
+    it('should throw a BiometricUnknownError', async () => {
       const { getAvailableBiometric } = require('../getAvailableBiometric');
 
       expect.assertions(1);
