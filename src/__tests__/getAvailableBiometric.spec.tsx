@@ -1,7 +1,7 @@
 import {
-  NoEnrollError,
-  UnknownBiometricError,
-  UnsupportedBiometricError,
+  BiometricNoEnrollError,
+  BiometricUnknownError,
+  BiometricUnsupportedError,
 } from '../errors';
 
 describe('Given a function to check if biometric is active', () => {
@@ -66,7 +66,7 @@ describe('Given a function to check if biometric is active', () => {
       try {
         await getAvailableBiometric();
       } catch (error) {
-        expect(error).toBeInstanceOf(NoEnrollError);
+        expect(error).toBeInstanceOf(BiometricNoEnrollError);
       }
     });
   });
@@ -93,7 +93,7 @@ describe('Given a function to check if biometric is active', () => {
       try {
         await getAvailableBiometric();
       } catch (error) {
-        expect(error).toBeInstanceOf(UnsupportedBiometricError);
+        expect(error).toBeInstanceOf(BiometricUnsupportedError);
       }
     });
   });
@@ -120,7 +120,7 @@ describe('Given a function to check if biometric is active', () => {
       try {
         await getAvailableBiometric();
       } catch (error) {
-        expect(error).toBeInstanceOf(UnknownBiometricError);
+        expect(error).toBeInstanceOf(BiometricUnknownError);
       }
     });
   });

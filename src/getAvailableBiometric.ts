@@ -3,9 +3,9 @@ import {
   BiometricAuthenitcationError,
   BiometricUserCancelError,
   BiometricFallbackError,
-  NoEnrollError,
-  UnknownBiometricError,
-  UnsupportedBiometricError,
+  BiometricNoEnrollError,
+  BiometricUnknownError,
+  BiometricUnsupportedError,
   BiometricPasscodeNotSetError,
   BiometricSystemCancelError,
   BiometricLockOutError,
@@ -18,9 +18,9 @@ const ErrorMap: Record<string, () => Error> = {
   103: () => new BiometricFallbackError(),
   102: () => new BiometricUserCancelError(),
   101: () => new BiometricAuthenitcationError(),
-  99: () => new NoEnrollError(),
-  98: () => new UnsupportedBiometricError(),
-  97: () => new UnknownBiometricError(),
+  99: () => new BiometricNoEnrollError(),
+  98: () => new BiometricUnsupportedError(),
+  97: () => new BiometricUnknownError(),
 };
 
 /**

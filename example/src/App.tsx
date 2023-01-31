@@ -4,9 +4,9 @@ import { StyleSheet, View, Text } from 'react-native';
 import {
   autheticate,
   getAvailableBiometric,
-  NoEnrollError,
-  UnknownBiometricError,
-  UnsupportedBiometricError,
+  BiometricNoEnrollError,
+  BiometricUnsupportedError,
+  BiometricUnknownError,
 } from 'react-native-biometrics-scanner';
 
 export default function App() {
@@ -26,13 +26,13 @@ export default function App() {
           setIsBiometricAvailable('No');
         }
       } catch (error) {
-        if (error instanceof NoEnrollError) {
+        if (error instanceof BiometricNoEnrollError) {
           setBiometricError('No enroll');
         }
-        if (error instanceof UnsupportedBiometricError) {
+        if (error instanceof BiometricUnsupportedError) {
           setBiometricError('Unsupported');
         }
-        if (error instanceof UnknownBiometricError) {
+        if (error instanceof BiometricUnknownError) {
           setBiometricError('Unknown error');
         }
       }

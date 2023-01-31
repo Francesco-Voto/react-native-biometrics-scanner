@@ -1,8 +1,8 @@
-export class UnknownBiometricError extends Error {}
+export class BiometricUnknownError extends Error {}
 
-export class UnsupportedBiometricError extends Error {}
+export class BiometricUnsupportedError extends Error {}
 
-export class NoEnrollError extends Error {}
+export class BiometricNoEnrollError extends Error {}
 
 export class BiometricAuthenitcationError extends Error {}
 
