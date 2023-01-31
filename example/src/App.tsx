@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import {
+  autheticate,
   getAvailableBiometric,
   NoEnrollError,
   UnknownBiometricError,
@@ -16,7 +17,14 @@ export default function App() {
   useEffect(() => {
     const getAvailability = async () => {
       try {
-        setIsBiometricAvailable((await getAvailableBiometric()) ? 'Yes' : 'No');
+        const biometric = await getAvailableBiometric();
+
+        if (biometric) {
+          setIsBiometricAvailable('Yes');
+          await autheticate();
+        } else {
+          setIsBiometricAvailable('No');
+        }
       } catch (error) {
         if (error instanceof NoEnrollError) {
           setBiometricError('No enroll');
