@@ -56,6 +56,29 @@ and throws:
 - `UnsupportedBiometricError` when the biometric is not supported by the device
 - `NoEnrollError` when user needs to enroll in order to use biometric
 
+### • authenticate
+
+```ts
+import { authenticate } from "react-native-biometrics-scanner";
+
+// ...
+
+await authenticate();
+```
+
+This method resolve a promise if the authentication is succesful and throws:
+
+- `BiometricUnknownError` when the status of biometric is unknown
+- `BiometricUnsupportedError` when the biometric is not supported by the device
+- `BiometricNoEnrollError` when user needs to enroll in order to use biometric
+- `BiometricAuthenitcationError` when the authentication fails
+- `BiometricUserCancelError` when user cancels the authentication
+- `BiometricPasscodeNotSetError` when a passcode is not set
+- `BiometricLockOutError` when the device is locked
+- `BiometricFallbackError` when the biometric authentication fails and the fallback is used
+- `BiometricPasscodeNotSetError` when passcode is not set
+- `BiometricSystemCancelError` (iOS only) when the system cancels the authentication
+
 ## Contributing
 See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
 
