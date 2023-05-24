@@ -11,9 +11,6 @@ yarn add react-native-biometrics-scanner
 ```
 
 ### iOS
-In order to make it run on iOS:
-Go to `Build Phase` ➜ `Link Binary With Libraries` ➜ add `LocalAuthentication.framework`
-
 In your Info.plist:
 ```
 <key>NSFaceIDUsageDescription</key>

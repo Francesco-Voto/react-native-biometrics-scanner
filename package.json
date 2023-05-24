@@ -98,12 +98,8 @@
     ]
   },
   "codegenConfig": {
-    "libraries": [
-      {
-        "name": "RNBiometricsScannerSpec",
-        "type": "modules",
-        "jsSrcsDir": "src"
-      }
-    ]
+    "name": "BiometricsScannerSpec",
+    "type": "modules",
+    "jsSrcsDir": "src"
   }
 }
