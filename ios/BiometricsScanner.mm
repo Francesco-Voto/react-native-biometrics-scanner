@@ -38,7 +38,7 @@ RCT_REMAP_METHOD(getAvailableBiometric,
             return;
         }
         
-        if(context.biometryType == LABiometryTypeTouchID) {
+        if(context.biometryType == LABiometryTypeFaceID) {
             resolve(FACE_ID);
             return;
         }
