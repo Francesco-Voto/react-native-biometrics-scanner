@@ -1,6 +1,6 @@
 // @ts-nocheck
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, View, Text} from 'react-native';
 import {
   authenticate,
   getAvailableBiometric,
@@ -21,7 +21,7 @@ export default function App() {
 
         if (biometric) {
           setIsBiometricAvailable('Yes');
-          await authenticate();
+          await authenticate('Enable it');
         } else {
           setIsBiometricAvailable('No');
         }
