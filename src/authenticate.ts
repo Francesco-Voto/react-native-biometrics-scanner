@@ -15,9 +15,9 @@ import { ErrorMap } from './errors';
  * @throws {@link BiometricPasscodeNotSetError} when passcode is not set
  * @throws {@link BiometricLockOutError} when user is locked out
  */
-export async function authenticate(): Promise<void> {
+export async function authenticate(reason: string): Promise<void> {
   try {
-    await BiometricsScanner.authenticate();
+    await BiometricsScanner.authenticate(reason);
   } catch (error: any) {
     const errorGenerator = ErrorMap[error.code];
     throw errorGenerator ? errorGenerator() : error;

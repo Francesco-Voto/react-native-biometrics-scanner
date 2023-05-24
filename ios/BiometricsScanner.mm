@@ -66,7 +66,7 @@ RCT_REMAP_METHOD(getAvailableBiometric,
     
 }
 
-RCT_REMAP_METHOD(authenticate,
+RCT_REMAP_METHOD(authenticate: (NSString*) reason,
                  withAuthenticateResolver:(RCTPromiseResolveBlock) resolve
                  withAuthenticateRejecter:(RCTPromiseRejectBlock) reject)
 {
@@ -74,7 +74,7 @@ RCT_REMAP_METHOD(authenticate,
     NSError *error;
     
     if([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error]){
-        [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:@"" reply:^(BOOL success, NSError *authError){
+        [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:reason reply:^(BOOL success, NSError *authError){
 
             if (success) {
                 resolve([NSNull null]);
