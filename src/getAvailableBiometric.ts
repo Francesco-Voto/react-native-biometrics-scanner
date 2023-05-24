@@ -1,5 +1,6 @@
 import BiometricsScanner from './NativeBiometricsScanner';
 import { ErrorMap } from './errors';
+import type { BiometricType } from './types';
 
 /**
  *

@@ -63,8 +63,16 @@ import { authenticate } from "react-native-biometrics-scanner";
 
 // ...
 
-await authenticate();
+await authenticate(prompt);
 ```
+It requires an object to configure the prompt message:
+- `promptMessage`: the message to show
+- `allowDeviceCredentials`: if allow device credentials (Android only)
+- `cancelButtonText`: the text for cancel button (Android only)(optional)
+- `descriptionText`: the text for description (Android only)(optional)
+- `subtitleText`: the text for subtitle (Android only)(optional)
+- `fallbackPromptMessage`: a text as fallback (iOS only)(optional)
+
 
 This method resolve a promise if the authentication is succesful and throws:
 
