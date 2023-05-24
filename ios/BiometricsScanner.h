@@ -1,5 +1,9 @@
-#import <React/RCTBridgeModule.h>
+#import <BiometricsScannerSpec/BiometricsScannerSpec.h>
 
-@interface BiometricsScanner : NSObject <RCTBridgeModule>
+NS_ASSUME_NONNULL_BEGIN
+
+@interface BiometricsScanner : NSObject <NativeBiometricsScannerSpec>
 
 @end
+
+NS_ASSUME_NONNULL_END

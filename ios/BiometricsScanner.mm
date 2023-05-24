@@ -1,31 +1,12 @@
+#import <BiometricsScannerSpec/BiometricsScannerSpec.h>
 #import "BiometricsScanner.h"
 #import <LocalAuthentication/LocalAuthentication.h>
-#import <React/RCTConvert.h>
-
-#ifdef RCT_NEW_ARCH_ENABLED
-#import "RNBiometricsScannerSpec.h"
-#endif
-
-typedef NS_ENUM(NSUInteger, BiometricError) {
-    ERROR_BIOMETRIC_UNKNOWN = 97,
-    ERROR_BIOMETRIC_UNSUPPORTED = 98,
-    ERROR_BIOMETRIC_NO_ENROLL = 99,
-    ERROR_BIOMETRIC_AUTHENTICATION_ERROR = 101,
-    ERROR_BIOMETRIC_USER_CANCEL = 102,
-    ERROR_BIOMETRIC_FALLBACK = 103,
-    ERROR_BIOMETRIC_SYSTEM_CANCEL = 104,
-    ERROR_BIOMETRIC_PASSCODE_NOT_SET = 105,
-    ERROR_BIOMETRIC_LOCK_OUT = 106,
-};
 
 
 @implementation BiometricsScanner
 RCT_EXPORT_MODULE()
 
-RCT_REMAP_METHOD(getAvailableBiometric,
-                 withResolver:(RCTPromiseResolveBlock) resolve
-                 withRejecter:(RCTPromiseRejectBlock) reject)
-{
+- (void)getAvailableBiometric: (RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject {
     LAContext *context = [[LAContext alloc] init];
     NSError *error;
     
@@ -45,7 +26,7 @@ RCT_REMAP_METHOD(getAvailableBiometric,
         }
         
         if(context.biometryType == LABiometryTypeNone){
-            reject([NSString stringWithFormat:@"%li",  ERROR_BIOMETRIC_UNSUPPORTED], @"Biometric is not supported", error);
+            reject([NSString stringWithFormat:@"%i",  99], @"Biometric is not supported", error);
             return;
         }
     }
@@ -54,34 +35,26 @@ RCT_REMAP_METHOD(getAvailableBiometric,
         case LAErrorBiometryNotAvailable:
         case LAErrorBiometryLockout:
         case LAErrorAuthenticationFailed:
-            reject([NSString stringWithFormat:@"%li",  ERROR_BIOMETRIC_UNSUPPORTED], @"Biometric is not supported", error);
+            reject([NSString stringWithFormat:@"%i",  98], @"Biometric is not supported", error);
             break;
         case LAErrorPasscodeNotSet:
         case LAErrorBiometryNotEnrolled:
-            reject([NSString stringWithFormat:@"%li",  ERROR_BIOMETRIC_NO_ENROLL], @"User must enroll", error);
+            reject([NSString stringWithFormat:@"%i",  99], @"User must enroll", error);
             break;
         default:
-            reject([NSString stringWithFormat:@"%li",  ERROR_BIOMETRIC_UNKNOWN], @"Biometric status is unknown", error);
+            reject([NSString stringWithFormat:@"%i",  97], @"Biometric status is unknown", error);
             break;
     }
-    
 }
 
-RCT_REMAP_METHOD(authenticate, withParams: (NSDictionary*) params
-                 withAuthenticateResolver:(RCTPromiseResolveBlock) resolve
-                 withAuthenticateRejecter:(RCTPromiseRejectBlock) reject)
-{
+- (void)authenticate:(JS::NativeBiometricsScanner::SpecAuthenticatePrompt &)prompt resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject {
     LAContext *context = [[LAContext alloc] init];
     NSError *error;
     
-    NSString *promptMessage = [RCTConvert NSString:params[@"promptMessage"]];
-    NSString *fallbackPromptMessage = [RCTConvert NSString:params[@"fallbackPromptMessage"]];
-    BOOL allowDeviceCredentials = [RCTConvert BOOL:params[@"allowDeviceCredentials"]];
-    
-    context.localizedFallbackTitle = fallbackPromptMessage;
+    context.localizedFallbackTitle = prompt.fallbackPromptMessage();
     
     if([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error]){
-        [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:promptMessage reply:^(BOOL success, NSError *authError){
+        [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason: prompt.promptMessage() reply:^(BOOL success, NSError *authError){
 
             if (success) {
                 resolve([NSNull null]);
@@ -90,55 +63,53 @@ RCT_REMAP_METHOD(authenticate, withParams: (NSDictionary*) params
             if(authError) {
                 switch(authError.code){
                     case LAErrorAuthenticationFailed:
-                        reject([NSString stringWithFormat:@"%li",  ERROR_BIOMETRIC_AUTHENTICATION_ERROR], @"Biometric authentication fails", error);
+                        reject([NSString stringWithFormat:@"%i",  101], @"Biometric authentication fails", error);
                         break;
                     case LAErrorUserCancel:
-                        reject([NSString stringWithFormat:@"%li",  ERROR_BIOMETRIC_USER_CANCEL], @"User cancels", error);
+                        reject([NSString stringWithFormat:@"%i",  102], @"User cancels", error);
                         break;
                     case LAErrorUserFallback:
-                        reject([NSString stringWithFormat:@"%li",  ERROR_BIOMETRIC_FALLBACK], @"Fallback", error);
+                        reject([NSString stringWithFormat:@"%i",  103], @"Fallback", error);
                         break;
                         
                     case LAErrorSystemCancel:
-                        reject([NSString stringWithFormat:@"%li",  ERROR_BIOMETRIC_SYSTEM_CANCEL], @"System cancels", error);
+                        reject([NSString stringWithFormat:@"%i",  104], @"System cancels", error);
                         break;
                         
                     case LAErrorPasscodeNotSet:
-                        reject([NSString stringWithFormat:@"%li",  ERROR_BIOMETRIC_PASSCODE_NOT_SET], @"Passcode not set", error);
+                        reject([NSString stringWithFormat:@"%i",  105], @"Passcode not set", error);
                         break;
                         
                     case LAErrorBiometryNotAvailable:
-                        reject([NSString stringWithFormat:@"%li",  ERROR_BIOMETRIC_UNSUPPORTED], @"Biometric is not supported", error);
+                        reject([NSString stringWithFormat:@"%i",  98], @"Biometric is not supported", error);
                         break;
                         
                     case LAErrorBiometryNotEnrolled:
-                        reject([NSString stringWithFormat:@"%li",  ERROR_BIOMETRIC_NO_ENROLL], @"User must enroll", error);
+                        reject([NSString stringWithFormat:@"%i",  99], @"User must enroll", error);
                         break;
                         
                     case LAErrorBiometryLockout:
-                        reject([NSString stringWithFormat:@"%li",  ERROR_BIOMETRIC_LOCK_OUT], @"User is locked out", error);
+                        reject([NSString stringWithFormat:@"%i",  106], @"User is locked out", error);
                         break;
                         
                     default:
-                        reject([NSString stringWithFormat:@"%li",  ERROR_BIOMETRIC_UNKNOWN], @"Biometric status is unknown", error);
+                        reject([NSString stringWithFormat:@"%i",  97], @"Biometric status is unknown", error);
                         break;
                 }
             }
         }];
         
     } else {
-        reject([NSString stringWithFormat:@"%li",  ERROR_BIOMETRIC_UNKNOWN], @"Biometric status is unknown", error);
+        reject([NSString stringWithFormat:@"%i",  97], @"Biometric status is unknown", error);
     }
-    
 }
 
 
-#ifdef RCT_NEW_ARCH_ENABLED
 - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:
 (const facebook::react::ObjCTurboModule::InitParams &)params
 {
     return std::make_shared<facebook::react::NativeBiometricsScannerSpecJSI>(params);
 }
-#endif
+
 
 @end

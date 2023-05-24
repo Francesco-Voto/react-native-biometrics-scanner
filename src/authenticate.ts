@@ -1,9 +1,10 @@
 import BiometricsScanner from './NativeBiometricsScanner';
 import { ErrorMap } from './errors';
-import type { SimplePromptOptions } from './types';
 
+type Prompt = Parameters<typeof BiometricsScanner.authenticate>[0];
 /**
  *
+ * @param prompt - object defining the prompt to show
  * @return {Promise<void>}
  *
  * @throws {@link BiometricUnknownError} when biometric status is unknown
@@ -16,7 +17,8 @@ import type { SimplePromptOptions } from './types';
  * @throws {@link BiometricPasscodeNotSetError} when passcode is not set
  * @throws {@link BiometricLockOutError} when user is locked out
  */
-export async function authenticate(prompt: SimplePromptOptions): Promise<void> {
+
+export async function authenticate(prompt: Prompt): Promise<void> {
   try {
     await BiometricsScanner.authenticate(prompt);
   } catch (error: any) {

@@ -22,7 +22,7 @@ export default function App() {
         if (biometric) {
           setIsBiometricAvailable('Yes');
           await authenticate({
-            promptMessage: 'Enable It',
+            promptMessage: 'Authenticate',
             cancelButtonText: 'Cancel',
             allowDeviceCredentials: true,
           });

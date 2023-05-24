@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* BiometricsScannerExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* BiometricsScannerExampleTests.m */; };
 		0C80B921A6F3F58F76C31292 /* libPods-BiometricsScannerExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-BiometricsScannerExample.a */; };
-		131332D42A1E615900357D72 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 131332D32A1E615900357D72 /* LocalAuthentication.framework */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -61,7 +60,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				131332D42A1E615900357D72 /* LocalAuthentication.framework in Frameworks */,
 				0C80B921A6F3F58F76C31292 /* libPods-BiometricsScannerExample.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
