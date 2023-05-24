@@ -66,7 +66,7 @@ RCT_REMAP_METHOD(getAvailableBiometric,
     
 }
 
-RCT_REMAP_METHOD(authenticate: (NSString*) reason,
+RCT_REMAP_METHOD(authenticate, withReason: (NSString*) reason
                  withAuthenticateResolver:(RCTPromiseResolveBlock) resolve
                  withAuthenticateRejecter:(RCTPromiseRejectBlock) reject)
 {

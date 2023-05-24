@@ -82,7 +82,7 @@ public class BiometricsScannerModule extends NativeBiometricsScannerSpec {
   }
 
   @Override
-  public void authenticate(final Promise promise) {
+  public void authenticate(String reason, final Promise promise) {
     UiThreadUtil.runOnUiThread(
       () -> {
         try {
@@ -95,7 +95,7 @@ public class BiometricsScannerModule extends NativeBiometricsScannerSpec {
           }
           BiometricPrompt biometricPrompt = new BiometricPrompt(fragmentActivity, executor, authCallback);
 
-          biometricPrompt.authenticate(getPromptInfo("Title", "Cancel", true));
+          biometricPrompt.authenticate(getPromptInfo(reason, "Cancel", true));
         } catch (Exception e) {
           promise.reject(String.valueOf(BiometricError.ERROR_BIOMETRIC_UNKNOWN), "Biometric status is unknown");
         }
