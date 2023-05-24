@@ -1,5 +1,6 @@
 import BiometricsScanner from './NativeBiometricsScanner';
 import { ErrorMap } from './errors';
+import type { SimplePromptOptions } from './types';
 
 /**
  *
@@ -15,9 +16,9 @@ import { ErrorMap } from './errors';
  * @throws {@link BiometricPasscodeNotSetError} when passcode is not set
  * @throws {@link BiometricLockOutError} when user is locked out
  */
-export async function authenticate(reason: string): Promise<void> {
+export async function authenticate(prompt: SimplePromptOptions): Promise<void> {
   try {
-    await BiometricsScanner.authenticate(reason);
+    await BiometricsScanner.authenticate(prompt);
   } catch (error: any) {
     const errorGenerator = ErrorMap[error.code];
     throw errorGenerator ? errorGenerator() : error;

@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.UiThreadUtil;
 import com.facebook.react.module.annotations.ReactModule;
 
@@ -66,11 +67,11 @@ public class BiometricsScannerModule extends NativeBiometricsScannerSpec {
     return BiometricManager.Authenticators.BIOMETRIC_STRONG;
   }
 
-  private BiometricPrompt.PromptInfo getPromptInfo(String promptMessage, String cancelButtonText, boolean allowDeviceCredentials) {
+  private BiometricPrompt.PromptInfo getPromptInfo(String promptMessage, String cancelButtonText, String description, String subtitle, boolean allowDeviceCredentials) {
     BiometricPrompt.PromptInfo.Builder builder = new BiometricPrompt.PromptInfo.Builder()
       .setTitle(promptMessage)
-      .setDescription("")
-      .setSubtitle("");
+      .setDescription(description)
+      .setSubtitle(subtitle);
 
     builder.setAllowedAuthenticators(getAllowedAuthenticators(allowDeviceCredentials));
 
@@ -82,7 +83,7 @@ public class BiometricsScannerModule extends NativeBiometricsScannerSpec {
   }
 
   @Override
-  public void authenticate(String reason, final Promise promise) {
+  public void authenticate(ReadableMap prompt, final Promise promise) {
     UiThreadUtil.runOnUiThread(
       () -> {
         try {
@@ -94,8 +95,13 @@ public class BiometricsScannerModule extends NativeBiometricsScannerSpec {
             throw new NullPointerException();
           }
           BiometricPrompt biometricPrompt = new BiometricPrompt(fragmentActivity, executor, authCallback);
+          boolean allowDeviceCredentials = prompt.getBoolean("allowDeviceCredentials");
+          String promptMessage = prompt.getString("promptMessage");
+          String cancelButtonText = prompt.getString("cancelButtonText");
+          String descriptionText = prompt.getString("descriptionText");
+          String subtitleText = prompt.getString("subtitleText");
 
-          biometricPrompt.authenticate(getPromptInfo(reason, "Cancel", true));
+          biometricPrompt.authenticate(getPromptInfo(promptMessage, cancelButtonText, descriptionText, subtitleText, allowDeviceCredentials));
         } catch (Exception e) {
           promise.reject(String.valueOf(BiometricError.ERROR_BIOMETRIC_UNKNOWN), "Biometric status is unknown");
         }

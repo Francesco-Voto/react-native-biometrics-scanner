@@ -1,5 +1,6 @@
 #import "BiometricsScanner.h"
 #import <LocalAuthentication/LocalAuthentication.h>
+#import <React/RCTConvert.h>
 
 #ifdef RCT_NEW_ARCH_ENABLED
 #import "RNBiometricsScannerSpec.h"
@@ -66,15 +67,21 @@ RCT_REMAP_METHOD(getAvailableBiometric,
     
 }
 
-RCT_REMAP_METHOD(authenticate, withReason: (NSString*) reason
+RCT_REMAP_METHOD(authenticate, withParams: (NSDictionary*) params
                  withAuthenticateResolver:(RCTPromiseResolveBlock) resolve
                  withAuthenticateRejecter:(RCTPromiseRejectBlock) reject)
 {
     LAContext *context = [[LAContext alloc] init];
     NSError *error;
     
+    NSString *promptMessage = [RCTConvert NSString:params[@"promptMessage"]];
+    NSString *fallbackPromptMessage = [RCTConvert NSString:params[@"fallbackPromptMessage"]];
+    BOOL allowDeviceCredentials = [RCTConvert BOOL:params[@"allowDeviceCredentials"]];
+    
+    context.localizedFallbackTitle = fallbackPromptMessage;
+    
     if([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error]){
-        [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:reason reply:^(BOOL success, NSError *authError){
+        [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:promptMessage reply:^(BOOL success, NSError *authError){
 
             if (success) {
                 resolve([NSNull null]);
