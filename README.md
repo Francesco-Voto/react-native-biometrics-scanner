@@ -45,7 +45,7 @@ const result = await getAvailableBiometric();
 This method return the type of biometric present on the device:
 
 - iOS: `TouchID` or `FaceID`
-- Android: `BiometricID`
+- Android: `TouchID` or `FaceID` or `IrisID` or if it is not possible to retrieve any info`BiometricID`
 
 and throws:
 

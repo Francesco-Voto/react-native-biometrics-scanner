@@ -17,10 +17,10 @@ export default function App() {
   useEffect(() => {
     const getAvailability = async () => {
       try {
-        const biometric = await getAvailableBiometric();
+        const biometric = await getAvailableBiometric(false);
 
         if (biometric) {
-          setIsBiometricAvailable('Yes');
+          setIsBiometricAvailable(biometric);
           await authenticate({
             promptMessage: 'Authenticate',
             cancelButtonText: 'Cancel',
