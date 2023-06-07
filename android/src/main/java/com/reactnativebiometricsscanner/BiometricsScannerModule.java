@@ -2,7 +2,6 @@ package com.reactnativebiometricsscanner;
 
 import android.content.Context;
 import android.os.Build;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.biometric.BiometricManager;
@@ -61,9 +60,10 @@ public class BiometricsScannerModule extends NativeBiometricsScannerSpec {
     return BiometricManager.Authenticators.BIOMETRIC_STRONG;
   }
 
+
   @Override
-  public void getAvailableBiometric(Promise promise) {
-    int result = mBiometricManager.canAuthenticate(getAllowedAuthenticators(false));
+  public void getAvailableBiometric(boolean allowDeviceCredentials, Promise promise) {
+    int result = mBiometricManager.canAuthenticate(getAllowedAuthenticators(allowDeviceCredentials));
 
 
     switch (result) {

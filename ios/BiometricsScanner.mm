@@ -6,14 +6,15 @@
 @implementation BiometricsScanner
 RCT_EXPORT_MODULE()
 
-- (void)getAvailableBiometric: (RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject {
+- (void)getAvailableBiometric:(BOOL)allowDeviceCredentials resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject {
     LAContext *context = [[LAContext alloc] init];
     NSError *error;
     
     static NSString *const TOUCH_ID = @"TouchID";
     static NSString *const FACE_ID = @"FaceID";
     
-    if([context canEvaluatePolicy: LAPolicyDeviceOwnerAuthenticationWithBiometrics error: &error]){
+    
+    if([context canEvaluatePolicy: allowDeviceCredentials ? LAPolicyDeviceOwnerAuthentication : LAPolicyDeviceOwnerAuthenticationWithBiometrics error: &error]){
         
         if(context.biometryType == LABiometryTypeTouchID) {
             resolve(TOUCH_ID);
@@ -53,8 +54,13 @@ RCT_EXPORT_MODULE()
     
     context.localizedFallbackTitle = prompt.fallbackPromptMessage();
     
-    if([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error]){
-        [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason: prompt.promptMessage() reply:^(BOOL success, NSError *authError){
+    LAPolicy policy = LAPolicyDeviceOwnerAuthenticationWithBiometrics;
+    if(prompt.allowDeviceCredentials()) {
+        policy = LAPolicyDeviceOwnerAuthentication;
+    }
+    
+    if([context canEvaluatePolicy: policy error:&error]){
+        [context evaluatePolicy: policy localizedReason: prompt.promptMessage() reply:^(BOOL success, NSError *authError){
 
             if (success) {
                 resolve([NSNull null]);

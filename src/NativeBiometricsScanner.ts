@@ -3,7 +3,9 @@ import { TurboModuleRegistry } from 'react-native';
 import type { BiometricType } from './types';
 
 export interface Spec extends TurboModule {
-  getAvailableBiometric(): Promise<BiometricType>;
+  getAvailableBiometric(
+    allowDeviceCredentials: boolean
+  ): Promise<BiometricType>;
   authenticate(prompt: {
     promptMessage: string;
     fallbackPromptMessage?: string;

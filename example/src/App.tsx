@@ -17,7 +17,7 @@ export default function App() {
   useEffect(() => {
     const getAvailability = async () => {
       try {
-        const biometric = await getAvailableBiometric();
+        const biometric = await getAvailableBiometric(false);
 
         if (biometric) {
           setIsBiometricAvailable(biometric);
