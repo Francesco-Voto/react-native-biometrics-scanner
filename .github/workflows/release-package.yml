@@ -10,6 +10,13 @@ jobs:
     steps:
           - name: Checkout
             uses: actions/checkout@v3
+          - name: Set up Ruby
+            uses: ruby/setup-ruby@v1
+            with:
+              ruby-version: '2.7.5' 
+              bundler-cache: true
+          - name: Install dependencies
+            run: cd example && bundle install && cd ..
           - name: Setup Node
             uses: actions/setup-node@v2
             with:
