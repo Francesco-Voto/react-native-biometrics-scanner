@@ -1,9 +1,8 @@
 package com.reactnativebiometricsscanner;
 
-import static androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG;
-import static androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL;
-
+import android.content.Context;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.biometric.BiometricManager;
@@ -23,11 +22,17 @@ import java.util.concurrent.Executors;
 public class BiometricsScannerModule extends NativeBiometricsScannerSpec {
   public static final String NAME = "BiometricsScanner";
   private static final String BIOMETRIC = "BiometricID";
+  private static final String FACE_ID = "FaceID";
+  private static final String TOUCH_ID = "TouchID";
+  private static final String IRIS_ID = "IrisID";
+
 
   private final BiometricManager mBiometricManager;
+  private final Context mContext;
 
   public BiometricsScannerModule(ReactApplicationContext reactContext) {
     super(reactContext);
+    this.mContext = reactContext;
     this.mBiometricManager = BiometricManager.from(reactContext);
   }
 
@@ -37,11 +42,44 @@ public class BiometricsScannerModule extends NativeBiometricsScannerSpec {
     return NAME;
   }
 
+  private static boolean isFingerprintBiometricAvailable(@NonNull final Context context) {
+    return context.getPackageManager().hasSystemFeature("android.hardware.fingerprint");
+  }
+
+  private static boolean isFaceBiometricAvailable(@NonNull final Context context) {
+    return context.getPackageManager().hasSystemFeature("android.hardware.biometrics.face");
+  }
+
+  private static boolean isIrisBiometricAvailable(@NonNull final Context context) {
+    return context.getPackageManager().hasSystemFeature("android.hardware.biometrics.iris");
+  }
+
+  private static int getAllowedAuthenticators(boolean allowDeviceCredentials) {
+    if (allowDeviceCredentials && Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
+      return BiometricManager.Authenticators.BIOMETRIC_STRONG | BiometricManager.Authenticators.DEVICE_CREDENTIAL;
+    }
+    return BiometricManager.Authenticators.BIOMETRIC_STRONG;
+  }
+
   @Override
   public void getAvailableBiometric(Promise promise) {
-    int result = mBiometricManager.canAuthenticate(BIOMETRIC_STRONG | DEVICE_CREDENTIAL);
+    int result = mBiometricManager.canAuthenticate(getAllowedAuthenticators(false));
+
+
     switch (result) {
       case BiometricManager.BIOMETRIC_SUCCESS:
+        if(isFingerprintBiometricAvailable(this.mContext)) {
+          promise.resolve(TOUCH_ID);
+          break;
+        }
+        if(isFaceBiometricAvailable(this.mContext)) {
+          promise.resolve(FACE_ID);
+          break;
+        }
+        if(isIrisBiometricAvailable(this.mContext)) {
+          promise.resolve(IRIS_ID);
+          break;
+        }
         promise.resolve(BIOMETRIC);
         break;
       case BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE:
@@ -58,13 +96,6 @@ public class BiometricsScannerModule extends NativeBiometricsScannerSpec {
         promise.reject(String.valueOf(BiometricError.ERROR_BIOMETRIC_UNKNOWN), "Biometric status is unknown");
         break;
     }
-  }
-
-  private int getAllowedAuthenticators(boolean allowDeviceCredentials) {
-    if (allowDeviceCredentials && Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
-      return BiometricManager.Authenticators.BIOMETRIC_STRONG | BiometricManager.Authenticators.DEVICE_CREDENTIAL;
-    }
-    return BiometricManager.Authenticators.BIOMETRIC_STRONG;
   }
 
   private BiometricPrompt.PromptInfo getPromptInfo(String promptMessage, String cancelButtonText, String description, String subtitle, boolean allowDeviceCredentials) {

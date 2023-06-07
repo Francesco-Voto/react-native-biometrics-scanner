@@ -1,1 +1,1 @@
-export type BiometricType = 'TouchID' | 'FaceID' | 'BiometricID';
+export type BiometricType = 'TouchID' | 'FaceID' | 'BiometricID' | 'IrisID';

@@ -20,7 +20,7 @@ export default function App() {
         const biometric = await getAvailableBiometric();
 
         if (biometric) {
-          setIsBiometricAvailable('Yes');
+          setIsBiometricAvailable(biometric);
           await authenticate({
             promptMessage: 'Authenticate',
             cancelButtonText: 'Cancel',
