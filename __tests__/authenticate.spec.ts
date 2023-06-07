@@ -8,11 +8,11 @@ import {
   BiometricUnknownError,
   BiometricUnsupportedError,
   BiometricUserCancelError,
-} from '../errors';
+} from '../src/errors';
 
 describe('Given a function to authenticate using biometric', () => {
   beforeAll(() => {
-    jest.doMock('../NativeBiometricsScanner', () => {
+    jest.doMock('../src/NativeBiometricsScanner', () => {
       return {
         __esModule: true,
         default: {
@@ -23,7 +23,7 @@ describe('Given a function to authenticate using biometric', () => {
   });
 
   afterAll(() => {
-    jest.unmock('../NativeBiometricsScanner');
+    jest.unmock('../src/NativeBiometricsScanner');
     jest.resetModules();
   });
 
@@ -32,7 +32,7 @@ describe('Given a function to authenticate using biometric', () => {
 
     beforeEach(() => {
       const NativeBiometricsScanner =
-        require('../NativeBiometricsScanner').default;
+        require('../src/NativeBiometricsScanner').default;
       spyFn = jest
         .spyOn(NativeBiometricsScanner, 'authenticate')
         .mockReturnValue(null);
@@ -43,7 +43,7 @@ describe('Given a function to authenticate using biometric', () => {
     });
 
     it('should return whithout errors', async () => {
-      const { authenticate } = require('../authenticate');
+      const { authenticate } = require('../src/authenticate');
 
       try {
         expect(await authenticate()).toBeNull();
@@ -56,7 +56,7 @@ describe('Given a function to authenticate using biometric', () => {
 
     beforeEach(() => {
       const NativeBiometricsScanner =
-        require('../NativeBiometricsScanner').default;
+        require('../src/NativeBiometricsScanner').default;
       spyFn = jest
         .spyOn(NativeBiometricsScanner, 'authenticate')
         .mockRejectedValue({ code: 99 });
@@ -67,7 +67,7 @@ describe('Given a function to authenticate using biometric', () => {
     });
 
     it('should throw a BiometricNoEnrollError', async () => {
-      const { authenticate } = require('../authenticate');
+      const { authenticate } = require('../src/authenticate');
 
       expect.assertions(1);
       try {
@@ -83,7 +83,7 @@ describe('Given a function to authenticate using biometric', () => {
 
     beforeEach(() => {
       const NativeBiometricsScanner =
-        require('../NativeBiometricsScanner').default;
+        require('../src/NativeBiometricsScanner').default;
       spyFn = jest
         .spyOn(NativeBiometricsScanner, 'authenticate')
         .mockRejectedValue({ code: 98 });
@@ -94,7 +94,7 @@ describe('Given a function to authenticate using biometric', () => {
     });
 
     it('should throw a BiometricUnsupportedError', async () => {
-      const { authenticate } = require('../authenticate');
+      const { authenticate } = require('../src/authenticate');
 
       expect.assertions(1);
       try {
@@ -110,7 +110,7 @@ describe('Given a function to authenticate using biometric', () => {
 
     beforeEach(() => {
       const NativeBiometricsScanner =
-        require('../NativeBiometricsScanner').default;
+        require('../src/NativeBiometricsScanner').default;
       spyFn = jest
         .spyOn(NativeBiometricsScanner, 'authenticate')
         .mockRejectedValue({ code: 97 });
@@ -121,7 +121,7 @@ describe('Given a function to authenticate using biometric', () => {
     });
 
     it('should throw a BiometricUnknownError', async () => {
-      const { authenticate } = require('../authenticate');
+      const { authenticate } = require('../src/authenticate');
 
       expect.assertions(1);
       try {
@@ -137,7 +137,7 @@ describe('Given a function to authenticate using biometric', () => {
 
     beforeEach(() => {
       const NativeBiometricsScanner =
-        require('../NativeBiometricsScanner').default;
+        require('../src/NativeBiometricsScanner').default;
       spyFn = jest
         .spyOn(NativeBiometricsScanner, 'authenticate')
         .mockRejectedValue({ code: 101 });
@@ -148,7 +148,7 @@ describe('Given a function to authenticate using biometric', () => {
     });
 
     it('should throw a BiometricAuthenitcationError', async () => {
-      const { authenticate } = require('../authenticate');
+      const { authenticate } = require('../src/authenticate');
 
       expect.assertions(1);
       try {
@@ -164,7 +164,7 @@ describe('Given a function to authenticate using biometric', () => {
 
     beforeEach(() => {
       const NativeBiometricsScanner =
-        require('../NativeBiometricsScanner').default;
+        require('../src/NativeBiometricsScanner').default;
       spyFn = jest
         .spyOn(NativeBiometricsScanner, 'authenticate')
         .mockRejectedValue({ code: 102 });
@@ -175,7 +175,7 @@ describe('Given a function to authenticate using biometric', () => {
     });
 
     it('should throw a BiometricUserCancelError', async () => {
-      const { authenticate } = require('../authenticate');
+      const { authenticate } = require('../src/authenticate');
 
       expect.assertions(1);
       try {
@@ -191,7 +191,7 @@ describe('Given a function to authenticate using biometric', () => {
 
     beforeEach(() => {
       const NativeBiometricsScanner =
-        require('../NativeBiometricsScanner').default;
+        require('../src/NativeBiometricsScanner').default;
       spyFn = jest
         .spyOn(NativeBiometricsScanner, 'authenticate')
         .mockRejectedValue({ code: 103 });
@@ -202,7 +202,7 @@ describe('Given a function to authenticate using biometric', () => {
     });
 
     it('should throw a BiometricFallbackError', async () => {
-      const { authenticate } = require('../authenticate');
+      const { authenticate } = require('../src/authenticate');
 
       expect.assertions(1);
       try {
@@ -218,7 +218,7 @@ describe('Given a function to authenticate using biometric', () => {
 
     beforeEach(() => {
       const NativeBiometricsScanner =
-        require('../NativeBiometricsScanner').default;
+        require('../src/NativeBiometricsScanner').default;
       spyFn = jest
         .spyOn(NativeBiometricsScanner, 'authenticate')
         .mockRejectedValue({ code: 104 });
@@ -229,7 +229,7 @@ describe('Given a function to authenticate using biometric', () => {
     });
 
     it('should throw a BiometricSystemCancelError', async () => {
-      const { authenticate } = require('../authenticate');
+      const { authenticate } = require('../src/authenticate');
 
       expect.assertions(1);
       try {
@@ -245,7 +245,7 @@ describe('Given a function to authenticate using biometric', () => {
 
     beforeEach(() => {
       const NativeBiometricsScanner =
-        require('../NativeBiometricsScanner').default;
+        require('../src/NativeBiometricsScanner').default;
       spyFn = jest
         .spyOn(NativeBiometricsScanner, 'authenticate')
         .mockRejectedValue({ code: 105 });
@@ -256,7 +256,7 @@ describe('Given a function to authenticate using biometric', () => {
     });
 
     it('should throw a BiometricPasscodeNotSetError', async () => {
-      const { authenticate } = require('../authenticate');
+      const { authenticate } = require('../src/authenticate');
 
       expect.assertions(1);
       try {
@@ -272,7 +272,7 @@ describe('Given a function to authenticate using biometric', () => {
 
     beforeEach(() => {
       const NativeBiometricsScanner =
-        require('../NativeBiometricsScanner').default;
+        require('../src/NativeBiometricsScanner').default;
       spyFn = jest
         .spyOn(NativeBiometricsScanner, 'authenticate')
         .mockRejectedValue({ code: 106 });
@@ -283,7 +283,7 @@ describe('Given a function to authenticate using biometric', () => {
     });
 
     it('should throw a BiometricLockOutError', async () => {
-      const { authenticate } = require('../authenticate');
+      const { authenticate } = require('../src/authenticate');
 
       expect.assertions(1);
       try {

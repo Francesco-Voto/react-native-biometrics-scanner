@@ -2,11 +2,11 @@ import {
   BiometricNoEnrollError,
   BiometricUnknownError,
   BiometricUnsupportedError,
-} from '../errors';
+} from '../src/errors';
 
 describe('Given a function to check if biometric is active', () => {
   beforeAll(() => {
-    jest.doMock('../NativeBiometricsScanner', () => {
+    jest.doMock('../src/NativeBiometricsScanner', () => {
       return {
         __esModule: true,
         default: {
@@ -17,7 +17,7 @@ describe('Given a function to check if biometric is active', () => {
   });
 
   afterAll(() => {
-    jest.unmock('../NativeBiometricsScanner');
+    jest.unmock('../src/NativeBiometricsScanner');
     jest.resetModules();
   });
 
@@ -26,7 +26,7 @@ describe('Given a function to check if biometric is active', () => {
 
     beforeEach(() => {
       const NativeBiometricsScanner =
-        require('../NativeBiometricsScanner').default;
+        require('../src/NativeBiometricsScanner').default;
       spyFn = jest
         .spyOn(NativeBiometricsScanner, 'getAvailableBiometric')
         .mockReturnValue('BiometricID');
@@ -37,7 +37,7 @@ describe('Given a function to check if biometric is active', () => {
     });
 
     it('should return the type of biometric when it is active', async () => {
-      const { getAvailableBiometric } = require('../getAvailableBiometric');
+      const { getAvailableBiometric } = require('../src/getAvailableBiometric');
       const biometricType = await getAvailableBiometric();
 
       expect(biometricType).toBe('BiometricID');
@@ -49,7 +49,7 @@ describe('Given a function to check if biometric is active', () => {
 
     beforeEach(() => {
       const NativeBiometricsScanner =
-        require('../NativeBiometricsScanner').default;
+        require('../src/NativeBiometricsScanner').default;
       spyFn = jest
         .spyOn(NativeBiometricsScanner, 'getAvailableBiometric')
         .mockRejectedValue({ code: 99 });
@@ -60,7 +60,7 @@ describe('Given a function to check if biometric is active', () => {
     });
 
     it('should throw a BiometricNoEnrollError', async () => {
-      const { getAvailableBiometric } = require('../getAvailableBiometric');
+      const { getAvailableBiometric } = require('../src/getAvailableBiometric');
 
       expect.assertions(1);
       try {
@@ -76,7 +76,7 @@ describe('Given a function to check if biometric is active', () => {
 
     beforeEach(() => {
       const NativeBiometricsScanner =
-        require('../NativeBiometricsScanner').default;
+        require('../src/NativeBiometricsScanner').default;
       spyFn = jest
         .spyOn(NativeBiometricsScanner, 'getAvailableBiometric')
         .mockRejectedValue({ code: 98 });
@@ -87,7 +87,7 @@ describe('Given a function to check if biometric is active', () => {
     });
 
     it('should throw a BiometricUnsupportedError', async () => {
-      const { getAvailableBiometric } = require('../getAvailableBiometric');
+      const { getAvailableBiometric } = require('../src/getAvailableBiometric');
 
       expect.assertions(1);
       try {
@@ -103,7 +103,7 @@ describe('Given a function to check if biometric is active', () => {
 
     beforeEach(() => {
       const NativeBiometricsScanner =
-        require('../NativeBiometricsScanner').default;
+        require('../src/NativeBiometricsScanner').default;
       spyFn = jest
         .spyOn(NativeBiometricsScanner, 'getAvailableBiometric')
         .mockRejectedValue({ code: 97 });
@@ -114,7 +114,7 @@ describe('Given a function to check if biometric is active', () => {
     });
 
     it('should throw a BiometricUnknownError', async () => {
-      const { getAvailableBiometric } = require('../getAvailableBiometric');
+      const { getAvailableBiometric } = require('../src/getAvailableBiometric');
 
       expect.assertions(1);
       try {
