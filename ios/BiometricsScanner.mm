@@ -55,7 +55,7 @@ RCT_EXPORT_MODULE()
     context.localizedFallbackTitle = prompt.fallbackPromptMessage();
     
     LAPolicy policy = LAPolicyDeviceOwnerAuthenticationWithBiometrics;
-    if(prompt.allowDeviceCredentials()) {
+    if(prompt.allowDeviceCredentials() == true) {
         policy = LAPolicyDeviceOwnerAuthentication;
     }
     

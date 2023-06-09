@@ -64,11 +64,11 @@ await authenticate(prompt);
 ```
 It requires an object to configure the prompt message:
 - `promptMessage`: the message to show
-- `allowDeviceCredentials`: if allow device credentials (Android only)
+- `allowDeviceCredentials`: if true the system fallback is used to authenticate after all the attempts of biometric fail, otherwise `BiometricFallbackError` is thrown
 - `cancelButtonText`: the text for cancel button (Android only)(optional)
 - `descriptionText`: the text for description (Android only)(optional)
 - `subtitleText`: the text for subtitle (Android only)(optional)
-- `fallbackPromptMessage`: a text as fallback (iOS only)(optional)
+- `fallbackPromptMessage`: the title of fallback option (iOS only)(optional)
 
 
 This method resolve a promise if the authentication is succesful and throws:
@@ -80,7 +80,7 @@ This method resolve a promise if the authentication is succesful and throws:
 - `BiometricUserCancelError` when user cancels the authentication
 - `BiometricPasscodeNotSetError` when a passcode is not set
 - `BiometricLockOutError` when the device is locked
-- `BiometricFallbackError` when the biometric authentication fails and the fallback is used
+- `BiometricFallbackError` when the biometric authentication fails and a fallback has to be provided
 - `BiometricPasscodeNotSetError` when passcode is not set
 - `BiometricSystemCancelError` (iOS only) when the system cancels the authentication
 

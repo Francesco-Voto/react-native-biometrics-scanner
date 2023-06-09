@@ -24,7 +24,7 @@ export default function App() {
           await authenticate({
             promptMessage: 'Authenticate',
             cancelButtonText: 'Cancel',
-            allowDeviceCredentials: true,
+            allowDeviceCredentials: false,
           });
         } else {
           setIsBiometricAvailable('No');
