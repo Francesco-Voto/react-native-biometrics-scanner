@@ -1,6 +1,6 @@
 {
   "name": "react-native-biometrics-scanner",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A module to handle biometric in React Native",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
