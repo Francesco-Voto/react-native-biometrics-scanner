@@ -1,6 +1,6 @@
-#import <BiometricsScannerSpec/BiometricsScannerSpec.h>
+
 #import "BiometricsScanner.h"
-#import <LocalAuthentication/LocalAuthentication.h>
+
 
 
 @implementation BiometricsScanner
@@ -110,12 +110,13 @@ RCT_EXPORT_MODULE()
     }
 }
 
-
+#ifdef RCT_NEW_ARCH_ENABLED
 - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:
 (const facebook::react::ObjCTurboModule::InitParams &)params
 {
     return std::make_shared<facebook::react::NativeBiometricsScannerSpecJSI>(params);
 }
+#endif
 
 
 @end
