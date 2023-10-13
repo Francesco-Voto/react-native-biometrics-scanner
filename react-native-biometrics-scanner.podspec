@@ -27,6 +27,7 @@ Pod::Spec.new do |s|
     install_modules_dependencies(s)
     else
     # ... other dependencies ...
+    s.dependency "React-Core"
     s.dependency "ReactCommon/turbomodule/core"
     end
     s.platforms       = { :ios => "13.4" }
