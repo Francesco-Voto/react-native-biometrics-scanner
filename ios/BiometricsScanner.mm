@@ -60,15 +60,15 @@ RCT_EXPORT_METHOD(
      resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject) {
 
 
-    LAContext *context = [LAContext alloc] init];
+    LAContext *context = [[LAContext alloc] init];
     NSError *error;
-    NSString* promptMessage = nil
-    NSString* fallbackPromptMessage = nil
+    NSString* promptMessage = nil;
+    NSString* fallbackPromptMessage = nil;
     BOOL allowDeviceCredentials = false;
     #ifdef RCT_NEW_ARCH_ENABLED
-    promptMessage = prompt.promptMessage()
+    promptMessage = prompt.promptMessage();
     fallbackPromptMessage= prompt.fallbackPromptMessage();
-    allowDeviceCredentials = prompt.allowDeviceCredentials()
+    allowDeviceCredentials = prompt.allowDeviceCredentials();
     #else
     promptMessage= [prompt objectForKey:@"promptMessage"];
     fallbackPromptMessage= [prompt objectForKey:@"fallbackPromptMessage"];
@@ -134,10 +134,6 @@ RCT_EXPORT_METHOD(
     }
 }
 
-// RCT_EXPORT_METHOD(addEvent:(NSString *)name location:(NSString *)location)
-// {
-
-// }
 
 
 #ifdef RCT_NEW_ARCH_ENABLED
