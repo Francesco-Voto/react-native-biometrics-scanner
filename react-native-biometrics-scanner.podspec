@@ -32,5 +32,6 @@ Pod::Spec.new do |s|
     s.platforms       = { :ios => "13.4" }
    else
     s.platforms       = { :ios => "12.4" }
+    s.dependency "React-Core"
    end
 end
