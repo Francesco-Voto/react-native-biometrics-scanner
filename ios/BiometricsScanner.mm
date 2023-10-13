@@ -6,7 +6,7 @@
 @implementation BiometricsScanner
 RCT_EXPORT_MODULE()
 
-- (void)getAvailableBiometric:(BOOL)allowDeviceCredentials resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject {
+RCT_EXPORT_METHOD(getAvailableBiometric:(BOOL)allowDeviceCredentials resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject) {
     LAContext *context = [[LAContext alloc] init];
     NSError *error;
     
@@ -48,19 +48,43 @@ RCT_EXPORT_MODULE()
     }
 }
 
-- (void)authenticate:(JS::NativeBiometricsScanner::SpecAuthenticatePrompt &)prompt resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject {
-    LAContext *context = [[LAContext alloc] init];
+
+RCT_EXPORT_METHOD(
+
+    #ifdef RCT_NEW_ARCH_ENABLED
+    authenticate:(JS::NativeBiometricsScanner::SpecAuthenticatePrompt &)prompt
+    #else
+    authenticate:(NSDictionary*)prompt
+    #endif
+
+     resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject) {
+
+
+    LAContext *context = [LAContext alloc] init];
     NSError *error;
-    
-    context.localizedFallbackTitle = prompt.fallbackPromptMessage();
+    NSString* promptMessage = nil
+    NSString* fallbackPromptMessage = nil
+    BOOL allowDeviceCredentials = false;
+    #ifdef RCT_NEW_ARCH_ENABLED
+    promptMessage = prompt.promptMessage()
+    fallbackPromptMessage= prompt.fallbackPromptMessage();
+    allowDeviceCredentials = prompt.allowDeviceCredentials()
+    #else
+    promptMessage= [prompt objectForKey:@"promptMessage"];
+    fallbackPromptMessage= [prompt objectForKey:@"fallbackPromptMessage"];
+    allowDeviceCredentials= [prompt objectForKey:@"allowDeviceCredentials"];
+    #endif
     
     LAPolicy policy = LAPolicyDeviceOwnerAuthenticationWithBiometrics;
-    if(prompt.allowDeviceCredentials() == true) {
-        policy = LAPolicyDeviceOwnerAuthentication;
+  
+    if(allowDeviceCredentials) {
+       policy = LAPolicyDeviceOwnerAuthentication;
     }
+
+    context.localizedFallbackTitle = fallbackPromptMessage;
     
     if([context canEvaluatePolicy: policy error:&error]){
-        [context evaluatePolicy: policy localizedReason: prompt.promptMessage() reply:^(BOOL success, NSError *authError){
+        [context evaluatePolicy: policy localizedReason: promptMessage reply:^(BOOL success, NSError *authError){
 
             if (success) {
                 resolve([NSNull null]);
@@ -109,6 +133,12 @@ RCT_EXPORT_MODULE()
         reject([NSString stringWithFormat:@"%i",  97], @"Biometric status is unknown", error);
     }
 }
+
+// RCT_EXPORT_METHOD(addEvent:(NSString *)name location:(NSString *)location)
+// {
+
+// }
+
 
 #ifdef RCT_NEW_ARCH_ENABLED
 - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:
