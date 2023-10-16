@@ -50,14 +50,14 @@ RCT_EXPORT_METHOD(getAvailableBiometric:(BOOL)allowDeviceCredentials resolve:(RC
 
 
 RCT_EXPORT_METHOD(
-
+ authenticate:
     #ifdef RCT_NEW_ARCH_ENABLED
-    authenticate:(JS::NativeBiometricsScanner::SpecAuthenticatePrompt &)prompt
+   (JS::NativeBiometricsScanner::SpecAuthenticatePrompt &)
     #else
-    authenticate:(NSDictionary*)prompt
+   (NSDictionary*)
     #endif
-
-     resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject) {
+    prompt
+    resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject) {
 
 
     LAContext *context = [[LAContext alloc] init];
