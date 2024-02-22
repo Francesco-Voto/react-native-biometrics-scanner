@@ -8,23 +8,23 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-          - name: Checkout
-            uses: actions/checkout@v3
-          - name: Set up Ruby
-            uses: ruby/setup-ruby@v1
-            with:
-              ruby-version: '2.7.5' 
-              bundler-cache: true
-          - name: Install dependencies
-            run: cd example && bundle install && cd ..
-          - name: Setup Node
-            uses: actions/setup-node@v2
-            with:
-              node-version: '16.13.1'
-              registry-url: 'https://registry.npmjs.org'
-          - name: Install dependencies and build 🔧
-            run: yarn && yarn prepare
-          - name: Publish package on NPM 📦
-            run: npm publish --access public
-            env:
-              NODE_AUTH_TOKEN: ${{ secrets.NPM_SECRET }}
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '2.7.5'
+          bundler-cache: true
+      - name: Install dependencies
+        run: cd example && bundle install && cd ..
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18.18.2'
+          registry-url: 'https://registry.npmjs.org'
+      - name: Install dependencies and build 🔧
+        run: yarn && yarn prepare
+      - name: Publish package on NPM 📦
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_SECRET }}

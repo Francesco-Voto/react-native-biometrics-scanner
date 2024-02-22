@@ -10,7 +10,7 @@ type Prompt = Parameters<typeof BiometricsScanner.authenticate>[0];
  * @throws {@link BiometricUnknownError} when biometric status is unknown
  * @throws {@link BiometricUnsupportedError} when biometric is not supported
  * @throws {@link BiometricNoEnrollError} when user must enroll to use biometric
- * @throws {@link BiometricAuthenitcationError} when an authentication error has occurred
+ * @throws {@link BiometricAuthenticationError} when an authentication error has occurred
  * @throws {@link BiometricUserCancelError} when user cancels authentication
  * @throws {@link BiometricFallbackError} when user tap fallback button
  * @throws {@link BiometricSystemCancelError} when system cancels authenitcation
