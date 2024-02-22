@@ -19,7 +19,7 @@ export class BiometricNoEnrollError extends Error {
   }
 }
 
-export class BiometricAuthenitcationError extends Error {
+export class BiometricAuthenticationError extends Error {
   constructor() {
     super('User failed to authenticate with biometrics');
     this.name = 'BiometricAuthenticationError';
@@ -62,7 +62,7 @@ export const ErrorMap: Record<string, () => Error> = {
   104: () => new BiometricSystemCancelError(),
   103: () => new BiometricFallbackError(),
   102: () => new BiometricUserCancelError(),
-  101: () => new BiometricAuthenitcationError(),
+  101: () => new BiometricAuthenticationError(),
   99: () => new BiometricNoEnrollError(),
   98: () => new BiometricUnsupportedError(),
   97: () => new BiometricUnknownError(),

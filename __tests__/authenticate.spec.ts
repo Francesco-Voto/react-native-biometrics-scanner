@@ -1,5 +1,5 @@
 import {
-  BiometricAuthenitcationError,
+  BiometricAuthenticationError,
   BiometricFallbackError,
   BiometricLockOutError,
   BiometricNoEnrollError,
@@ -147,14 +147,14 @@ describe('Given a function to authenticate using biometric', () => {
       spyFn.mockClear();
     });
 
-    it('should throw a BiometricAuthenitcationError', async () => {
+    it('should throw a BiometricAuthenticationError', async () => {
       const { authenticate } = require('../src/authenticate');
 
       expect.assertions(1);
       try {
         await authenticate();
       } catch (error) {
-        expect(error).toBeInstanceOf(BiometricAuthenitcationError);
+        expect(error).toBeInstanceOf(BiometricAuthenticationError);
       }
     });
   });
