@@ -16,11 +16,13 @@ jobs:
           ruby-version: '2.7.5'
           bundler-cache: true
       - name: Install dependencies
-        run: cd example && bundle install && cd ..
+        run: cd example && bundle install && cd ..  
       - name: Setup Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: '18.18.2'
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+          cache-dependency-path: yarn.lock
           registry-url: 'https://registry.npmjs.org'
       - name: Install dependencies and build 🔧
         run: yarn && yarn prepare
