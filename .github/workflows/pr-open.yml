@@ -10,17 +10,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Cache node modules
-        uses: actions/cache@v3
-        id: yarn-cache
+      - uses: actions/setup-node@v4
         with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-
-      - name: Install Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.18.2
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+          cache-dependency-path: yarn.lock
 
       - name: Install Dependencies
         if: steps.yarn-cache.outputs.cache-hit != 'true'
