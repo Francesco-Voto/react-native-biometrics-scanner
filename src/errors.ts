@@ -1,18 +1,58 @@
-export class BiometricUnknownError extends Error {}
+export class BiometricUnknownError extends Error {
+  constructor() {
+    super('Biometric status is unknown');
+    this.name = 'BiometricUnknownError';
+  }
+}
 
-export class BiometricUnsupportedError extends Error {}
+export class BiometricUnsupportedError extends Error {
+  constructor() {
+    super('Biometric type is not supported');
+    this.name = 'BiometricUnsupportedError';
+  }
+}
 
-export class BiometricNoEnrollError extends Error {}
+export class BiometricNoEnrollError extends Error {
+  constructor() {
+    super('User is not enrolled to use biometrics');
+    this.name = 'BiometricNoEnrollError';
+  }
+}
 
-export class BiometricAuthenitcationError extends Error {}
+export class BiometricAuthenitcationError extends Error {
+  constructor() {
+    super('User failed to authenticate with biometrics');
+    this.name = 'BiometricAuthenticationError';
+  }
+}
 
-export class BiometricUserCancelError extends Error {}
+export class BiometricUserCancelError extends Error {
+  constructor() {
+    super('User cancelled biometric authentication');
+    this.name = 'BiometricUserCancelError';
+  }
+}
 
-export class BiometricSystemCancelError extends Error {}
+export class BiometricSystemCancelError extends Error {
+  constructor() {
+    super('System cancelled biometric authentication');
+    this.name = 'BiometricSystemCancelError';
+  }
+}
 
-export class BiometricFallbackError extends Error {}
+export class BiometricFallbackError extends Error {
+  constructor() {
+    super('Fallback authentication method failed');
+    this.name = 'BiometricFallbackError';
+  }
+}
 
-export class BiometricPasscodeNotSetError extends Error {}
+export class BiometricPasscodeNotSetError extends Error {
+  constructor() {
+    super('Passcode not set');
+    this.name = 'BiometricPasscodeNotSetError';
+  }
+}
 
 export class BiometricLockOutError extends Error {}
 
